@@ -46,7 +46,11 @@ module DefaultWhere
     where_string, where_hash = default_where_scope(params)
     where_string = where_string.join ' AND '
 
-    where(equal_params).where(where_string, where_hash)
+    if where_string.present?
+      where(equal_params).where(where_string, where_hash)
+    else
+      where(equal_params)
+    end
   end
 
   def default_where_or(params = {})
